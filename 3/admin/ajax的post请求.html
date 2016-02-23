@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="js/jquery.js"></script>
+</script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $.post("http://wandaoa.f3322.org:7280/code/",
+    {
+    	dev_box:"MP1810",
+    		code_box:"SC121"
+    },
+    function(data,status){
+      alert("数据：" + data + "\n状态：" + status);
+    });
+  });
+});
+</script>
+</head>
+<body>
+
+<button>向页面发送 HTTP POST 请求，并获得返回的结果</button>
+
+</body>
+</html>

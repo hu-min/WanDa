@@ -1,0 +1,505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/select.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+<script type="text/javascript" src="js/select-ui.min.js"></script>
+<script type="text/javascript" src="editor/kindeditor.js"></script>
+<script type="text/javascript" src="js/iosOverlay.js"></script>
+<script type="text/javascript" src="js/custom.js"></script>
+<script src="js/prettify.js"></script>
+<script src="js/horsey.js"></script>
+<link rel="stylesheet" href="css/iosOverlay.css">
+	<script type="text/javascript">
+		window.onload = setTimeout(function() {
+			tishi();//使用字符串执行方法 ,5000)
+		}, 10 * 1000);
+		$(document).ready(
+
+				//左侧通讯录请求进来的数据
+				function() {
+					auto();
+					var Request = new Object();
+					Request = GetRequest();
+					var id, name, thing;
+					thing = Request['thing'];
+					id = Request['id'];
+					name = Request['name'];
+					name = decodeURI(name);
+					name = decodeURI(name);
+					var Dat = getdate();
+					$("#meeting").val(Dat);
+					//$("#meeting").attr('readonly', 'readonly');
+					if (thing == 'fenpei') {
+						$("#id").val(id);
+						$("#id").attr('readonly', 'readonly');
+					} else if (thing == 'jindu') {
+						$(".seachform1").slideUp(2000);
+						$(".sarchbtn").slideUp(2000);
+						$("#neirong").text(name + "的         任务详情");
+						$("#weiwancheng")
+								.text(name + "历史未完成或者放弃的         任务详情");
+						$("#neirong").animate({
+							width : "100%"
+						}, 2000);
+						$("#weiwancheng").animate({
+							width : "100%"
+						}, 2000);
+					}
+					$(".scbtn").click(
+							function() {
+								var place = $("#place").val();
+								var detail = $("#detail").val();
+								var id = $("#id").val();
+								var meeting = $("#meeting").val();
+								var tip = $("#tip").val();
+								if (place === "") {
+									alert("非法操作：地点没有填写！");
+								} else if (id == "无") {
+									alert("非法操作：您没有指定第一次执行任务的人！");
+								} else if (meeting == "2015-10-23") {
+									alert("非法操作：您可能每天写日期，还是默认的！");
+								} else {
+									var myDate = new Date();
+									$("#neirong").text(
+											myDate.toLocaleDateString()
+													+ "的         任务详情");
+									$("#weiwancheng").text(
+											myDate.toLocaleDateString()
+													+ "以前的         任务详情");
+
+									$("#neirong").attr("width", "0px");
+									$("#weiwancheng").attr("width", "0px");
+
+									$("#neirong").animate({
+										width : "100%"
+									}, 2000);
+									$("#weiwancheng").animate({
+										width : "100%"
+									}, 2000);
+									$(".seachform2").slideUp(2000);
+									$(".scbtn1").attr("value", "更多细节");
+									$("tbody tr").remove();
+									setTask(place, detail, id, meeting, tip);
+								}
+
+							});
+					$(".scbtn1").click(function() {
+						if ($(".scbtn1").attr("value") == '更多细节') {
+							$(".scbtn1").attr("value", "收起细节");
+							$(".seachform2").slideDown(1000);
+						} else {
+							$(".scbtn1").attr("value", "更多细节");
+							$(".seachform2").slideUp(1000);
+						}
+					});
+					// 		$(".scbtn2").click(function(){
+					// 			  $(".tip").fadeIn(500);
+					//   		});
+					// 		$(".tiptop a").click(function(){
+					// 			$(".tip").fadeOut(500);
+					// 		});
+
+					// 		$(".sure").click(function(){
+					// 			$(".tip").fadeOut(500);
+					// 		});
+					// 		$(".cancel").click(function(){
+					// 			$(".tip").fadeOut(500);
+					// 		});
+
+				});
+	</script>
+</head>
+<body>
+	<div class="place">
+		<span>位置：</span>
+		<ul class="placeul">
+			<li><a href="#">首页</a></li>
+			<li><a href="#">任务管理</a></li>
+			<li><a href="#">发布任务</a></li>
+		</ul>
+	</div>
+	<div class="formbody">
+		<div id="usual1" class="usual">
+			<ul class="seachform1">
+				<li><label>任务地点：</label><input id="place" name="" type="text"
+					class="scinput1" /></li>
+				<li><label>任务描述：</label><input id="detail" name="" type="text"
+					class="scinput1" /></li>
+				<li><label>分配ID：</label><input id="id" name="" type="text"
+					class="scinput1" autocomplete="off" /></li>
+				<br />
+				<li><label style="color: red;">发布日期</label>
+					<div class="vocation">
+						<input class="scinput1" id="meeting" type="date"
+							value="2015-10-23" />
+					</div></li>
+				<li style="font-size: 7px; color: red; text-align: center;">(*必填)</li>
+			</ul>
+			<br />
+			<ul class="seachform2">
+				<span style="font-size: 7px; color: red;"><br /> <br />注意：输入框建议请勿填写过多文字，一般100以下，过多导致数据库膨胀，服务器无法承受！<br /><br />任务提示暂时不启用，请在任务描述中添加信息<br />
+				</span>
+				</br>
+				<li><label>任务提示：</label><input id="tip" name="" type="text"
+					class="scinput1" /></li>
+			</ul>
+			<div>
+				<li class="sarchbtn"><label>&nbsp;</label> <input name=""
+					type="button" class="scbtn" value="添加任务" /> <input name=""
+					type="button" class="scbtn1" value="更多细节" /> <input name=""
+					type="button" class="scbtn3" value="任务进度" /></li>
+			</div>
+			<div id="tishi">
+				<span style="font-size: 7px; color: red;"><br />注意：10秒后下方红字提示内容会自动消失！</span>
+				<span style="font-size: 7px; color: red;"><br />添加任务：需要填写地点，描述分配人ID以及发布时间，
+					填写有问题会自动提醒！</span> <span style="font-size: 7px; color: red;"><br />更多细节：增加任务提示功能，方便技术员获取支持！</span>
+				<span style="font-size: 7px; color: red;"><br />任务进度：填写ID即可，查询此员工今日的任务进度！</span>
+				<span style="font-size: 7px; color: red;"><br />删除勾选：批量删除下方选中的项目，您也可以在操作选项中单条删除！<br />
+				</span>
+			</div>
+			<div class="formtitle">
+				<span id="neirong">任务列表</span>
+			</div>
+
+			<!--今日任务 -->
+			<table class="tablelist">
+				<thead>
+					<tr>
+						<th><input name="" type="checkbox" value="" /></th>
+						<th>是否完成<i class="sort"><img src="images/px.gif" /></i></th>
+						<th>任务地点</th>
+						<th>初始员工</th>
+						<th>初始ID</th>
+						<th>发布时间</th>
+						<th>当前接管人</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="tbody">
+					<tr>
+				</tbody>
+			</table>
+			<div>
+				<li class="sarchbtn"><label>&nbsp;</label> <input type="button"
+					class="scbtn2" value="历史未完成" /></li>
+			</div>
+			<div class="formtitle">
+				<span id="weiwancheng">任务列表</span>
+			</div>
+
+			<span style="font-size: 7px; color: red;"><br />注意：由于历史数据量大，仅显示历史未完成任务，若查询历史已完成任务，请
+				到管理后台数据库自行查询！<br /> <br /> <br /> </span>
+			<!--历史未完成任务 -->
+			<table class="tablelist">
+				<thead>
+					<tr>
+						<th><input name="" type="checkbox" value="" /></th>
+						<th>是否完成<i class="sort"><img src="images/px.gif" /></i></th>
+						<th>任务地点</th>
+						<th>员工姓名</th>
+						<th>员工ID</th>
+						<th>发布时间</th>
+						<th>当前接管人</th>
+						<th>提示信息</th>
+					</tr>
+				</thead>
+				<tbody id="odtbody">
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="tip">
+		<div class="tiptop">
+			<span>提示信息</span><a></a>
+		</div>
+		<div class="tipinfo">
+			<span><img src="images/ticon.png" /></span>
+			<div class="tipright">
+				<p>抱歉，导出失败！</p>
+				<cite>请检查接入数据库部分并点击确定按钮 ，否则请点取消。</cite>
+			</div>
+		</div>
+		<div class="tipbtn">
+			<input name="" type="button" class="sure" value="确定" />&nbsp; <input
+				name="" type="button" class="cancel" value="取消" />
+		</div>
+	</div>
+	<script type="text/javascript">
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串
+			var theRequest = new Object();
+			if (url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for (var i = 0; i < strs.length; i++) {
+					theRequest[strs[i].split("=")[0]] = unescape(strs[i]
+							.split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+
+		//自动去掉提示
+		function tishi() {
+			$("#tishi").slideUp(1000);
+		};
+
+		/**
+		 * 得到服务器任务数据
+		 */
+		function getTask() {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp
+					.open(
+							"GET",
+							"http://3.zhouxueweixin.sinaapp.com/admin/echo.php?type=Task",
+							true);
+			xmlHttp.send(null);
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					var data = eval(xmlHttp.responseText);
+					var word = "";
+					for ( var index in data) {
+						addElementDiv("tr", "tbody", index, 0, "");
+						addElementDiv("td", "tr" + index, index, 1, "");
+						addElementDiv("input", "td" + index, index, 0, "");
+						if (data[index].done == 0) {
+							word = "未完成";
+						} else {
+							word = "已完成";
+						}
+						addElementDiv("td", "tr" + index, index, 0, word);
+						addElementDiv("td", "tr" + index, index, 0,
+								data[index].place);
+						addElementDiv("td", "tr" + index, index, 0,
+								data[index].name);
+						addElementDiv("td", "tr" + index, index, 0,
+								data[index].id);
+						addElementDiv("td", "tr" + index, index, 0,
+								data[index].date);
+						addElementDiv("td", "tr" + index, index, 0,
+								data[index].people);
+						addElementDiv("a", "tr" + index, index, 0, "删除/分配");
+						$("#tr" + index).hide();
+						$("#tr" + index).fadeIn("slow");
+					}
+				}
+			}
+		}
+		/**
+		 * 提交数据到服务器增加任务
+		 */
+		function setTask(place, detail, id, meeting, tip) {
+
+			//alert("place:"+place+"detail:"+detail+"id"+id+"meeting"+meeting+"tip:"+tip);
+			var Qure = 'place=' + place + '&&detail=' + detail + '&&id=' + id
+					+ '&&meeting=' + meeting;
+			var Mstring = 'http://3.zhouxueweixin.sinaapp.com/admin/echo.php?type=Task&&'
+					+ Qure;
+			alert(Mstring);
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open("GET", Mstring, true);
+			xmlHttp.send(null);
+			xmlHttp.onreadystatechange = function() {
+				if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+					var result = xmlHttp.responseText;
+					if (result == '添加任务成功') {
+						iosOverlay({
+							text : "Success!",
+							duration : 2e3,
+							icon : "images/check.png"
+						});
+
+					}
+				}
+			}
+			getTask();
+		}
+
+		/**
+		type:插入的类型
+		obj:被插入的对象
+		num:当前第几个仅仅在tr有用
+		fist：决定此是否为此对象指定ID，仅仅在第一个td有用
+		 */
+		function addElementDiv(type, obj, num, fist, string) {
+			var parent = document.getElementById(obj);
+			switch (type) {
+			case "tr": {
+				var neww = document.createElement("tr");
+				neww.setAttribute("id", "tr" + num);
+				parent.appendChild(neww);
+			}
+				break;
+			case "td": {
+				if (fist == 1) {
+					var neww = document.createElement("td");
+					neww.setAttribute("id", "td" + num);
+					parent.appendChild(neww);
+				} else {
+					var neww = document.createElement("td");
+					if (string == '未完成' || string == '无') {
+						neww.setAttribute("style", 'color:red');
+					}
+					neww.innerHTML = string;
+					parent.appendChild(neww);
+				}
+			}
+				break;
+			case "input": {
+				var neww = document.createElement("input");
+				neww.setAttribute("type", "checkbox");
+				parent.appendChild(neww);
+			}
+				break;
+			case "a": {
+				var neww = document.createElement("a");
+				neww.setAttribute("style", 'color:red');
+				neww.innerHTML = string;
+				neww.setAttribute("href", 'http://www.w3school.com.cn');
+				parent.appendChild(neww);
+			}
+				break;
+			default:
+				break;
+			}
+		}
+
+		//获取当前时间
+		function getdate() {
+			var now = new Date();
+			var Dat = now.getFullYear() + "-"
+					+ ((now.getMonth() + 1) < 10 ? "0" : "")
+					+ (now.getMonth() + 1) + "-"
+					+ (now.getDate() < 10 ? "0" : "") + now.getDate();
+			return Dat;
+		}
+		//ID提示函数
+		function events(el, type, fn) {
+			if (el.addEventListener) {
+				el.addEventListener(type, fn);
+			} else if (el.attachEvent) {
+				el.attachEvent('on' + type, wrap(fn));
+			} else {
+				el['on' + type] = wrap(fn);
+			}
+		}
+
+		function auto() {
+			horsey(id, {
+				suggestions : [ {
+					value : 'wangshifan',
+					text : 'Name：王世藩      Position：渠道经理'
+				}, {
+					value : 'liangxin',
+					text : 'Name：梁鑫      Position：技术员'
+				}, {
+					value : 'mengjinhui',
+					text : 'Name：蒙锦慧      Position：客服'
+				}, {
+					value : 'linchan',
+					text : 'Name：林婵     Position：业务员'
+				}, {
+					value : 'fuzhiming',
+					text : 'Name：符之明     Position：技术员'
+				}, {
+					value : 'wangzhiwei',
+					text : 'Name：王志伟     Position：总经理'
+				}, {
+					value : 'kelihua',
+					text : 'Name：柯丽华     Position：部门经理'
+				}, {
+					value : 'linshuren',
+					text : 'Name：林书任     Position：技术员'
+				}, {
+					value : 'chenjincai',
+					text : 'Name：陈进财     Position：技术员'
+				}, {
+					value : 'gaoyujuan',
+					text : 'Name：高玉娟     Position：销售文员'
+				}, {
+					value : 'wangxingjie',
+					text : 'Name：王杏杰     Position：行政总监'
+				}, {
+					value : 'linrumei',
+					text : 'Name：林汝妹     Position：商务-合同'
+				}, {
+					value : 'huangcaixia',
+					text : 'Name：黄彩霞     Position：客服'
+				}, {
+					value : 'lvjun',
+					text : 'Name：吕君     Position：部门经理'
+				}, {
+					value : 'xiangaize',
+					text : 'Name：冼盖泽     Position：技术组长'
+				}, {
+					value : 'huangfuquan',
+					text : 'Name：黄辅权     Position：业务员'
+				}, {
+					value : 'caiyu',
+					text : 'Name：蔡瑜     Position：销售总监'
+				}, {
+					value : 'yejianrui',
+					text : 'Name：叶剑睿     Position：送货员'
+				}, {
+					value : 'wuxiujian',
+					text : 'Name：吴秀娟     Position：仓管员'
+				}, {
+					value : 'wangxiaona',
+					text : 'Name：王小娜     Position：商务-采购'
+				}, {
+					value : 'chenmingzhen',
+					text : 'Name：陈明祯     Position：财务'
+				}, {
+					value : 'huangchao',
+					text : 'Name：黄超     Position：技术员'
+				}, {
+					value : 'wangwenfeng',
+					text : 'Name：王文锋     Position：技术员'
+				}, {
+					value : 'wangpeng',
+					text : 'Name：王鹏     Position：业务员'
+				}, {
+					value : 'zhouridun',
+					text : 'Name：周日敦     Position：业务员'
+				}, {
+					value : 'chenxiaoqing',
+					text : 'Name：陈小青     Position：财务'
+				}, {
+					value : 'liuyunxiong',
+					text : 'Name：刘运雄     Position：部门经理'
+				}, {
+					value : 'tangnanbang',
+					text : 'Name：唐南膀     Position：技术员'
+				}, {
+					value : 'linhuaxin',
+					text : 'Name：林华新     Position：技术员'
+				}, {
+					value : 'zhouxue',
+					text : 'Name：周雪     Position：技术员'
+				}, {
+					value : 'lixu',
+					text : 'Name：黎旭     Position：技术员'
+				} ]
+			});
+		}
+		function wrap(originalEvent) {
+			var e = originalEvent || global.event;
+			e.target = e.target || e.srcElement;
+			e.preventDefault = e.preventDefault || function preventDefault() {
+				e.returnValue = false;
+			};
+			e.stopPropagation = e.stopPropagation
+					|| function stopPropagation() {
+						e.cancelBubble = true;
+					};
+			fn.call(el, e);
+		}
+	</script>
+</body>
+</html>

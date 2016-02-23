@@ -1,0 +1,167 @@
+@charset "utf-8";
+/* CSS Document by jacy use in vipcard */
+body {
+	background: url(vipbg1.jpg) repeat-y right 0, url(vipbg2.jpg) repeat-y
+		left 0, url(vipbg3.jpg) repeat-x 0 0, url(vipbg4.jpg) repeat 0 0,
+		#864c2c;
+	background-size: 3.5px 23.5px, 3.5px 23.5px, 304.5px 93px, 313px 23.5px;
+}
+
+.body {
+	color: #666;
+	font: 14px/1.5 Helvetica, Arial, Tahoma;
+	text-align: center;
+	overflow: visible;
+	background: none;
+}
+
+.card_num {
+	position: absolute;
+	right: 50px;
+	top: 60px;
+	font-size: 18px;
+}
+
+.geted {
+	background: none;
+}
+
+.geted img {
+	margin: 0 auto;
+	display: block;
+}
+
+.geted .card_name {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.geted  .card_num {
+	bottom: 20px;
+	top: auto
+}
+
+.card_info {
+	margin-top: 60px
+}
+
+.get_card_info {
+	margin-top: 20px;
+}
+
+.card_info a {
+	display: block
+}
+
+h6 {
+	font-size: 18px;
+	font-weight: bold
+}
+
+.page_title {
+	font-size: 24px;
+	color: #fff;
+	line-height: 40px;
+	height: 40px;
+	margin-top: 10px;
+	text-align: center
+}
+
+.score_nav {
+	display: -webkit-box;
+}
+
+.score_nav a {
+	text-align: center;
+}
+
+.score_nav a.cur {
+	background-color: #ccc;
+	color: #fff;
+}
+
+.score_list {
+	display: table;
+	width: 100%;
+	font-size: 12px;
+}
+
+.score_list span {
+	text-align: left;
+	display: table-cell;
+	width: 33.3%;
+	padding: 5px;
+}
+
+.score_list_top {
+	background-color: #ddd;
+	font-size: 14px;
+}
+
+.all_score {
+	text-align: right;
+	color: #33ab07
+}
+
+.select_month {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.select_month div {
+	padding: 10px 10px 10px 50px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-size: 30px 30px;
+	border: none;
+	background-color: #fecf76
+}
+
+.select_month div p {
+	background-repeat: no-repeat;
+	background-position: right center;
+	background-size: 15px 15px;
+}
+
+.select_month div p span {
+	font-size: 12px;
+	color: #999
+}
+
+.select_month select {
+	position: absolute;
+	height: 60px;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	z-index: 100;
+}
+
+/* toggle_list */
+.toggle_list .title {
+	overflow: hidden;
+	line-height: 30px;
+	background-size: 15px 15px;
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+.toggle_list .title p {
+	padding-left: 40px;
+}
+
+.toggle_list .content {
+	margin: 10px 0 0;
+	background-color: #f3f3f3;
+	border-radius: 10px;
+	padding: 10px;
+	display: none
+}
+
+/**
+是否展开显示详情
+*/
+.toggle_list_open .content {
+	display: none;
+}

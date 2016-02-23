@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+html, body {
+	background-color: #f4f4f4;
+	width: 100%;
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	min-height: 100%;
+	min-height: 100%;
+	font-family: Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial,
+		san-serif;
+	font-size: 15px;
+	line-height: 1.5em;
+	-webkit-touch-callout: none;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-box-align: stretch;
+	position: relative;
+}
+
+* {
+	margin: 0;
+	outline: 0;
+	padding: 0;
+	font-size: 100%;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.copyright {
+	text-align: center;
+	line-height: 60px;
+	color: #999
+}
+
+.zhuyi {
+	align: center;
+	line-height: 20px;
+	margin-top: 10px;
+	color: #c0c0c0
+}
+
+.body {
+	background-color: #f4f4f4
+}
+/* form */
+textarea, input[type="text"], input[type="password"], input[type="datetime"],
+	input[type="datetime-local"], input[type="date"], input[type="month"],
+	input[type="time"], input[type="week"], input[type="number"], input[type="email"],
+	input[type="url"], input[type="search"], input[type="tel"], input[type="color"],
+	.uneditable-input, select {
+	display: block;
+	padding: 30px 5px;
+	border: 1px solid #ccc;
+	width: 100%;
+	border-radius: 5px;
+	background: #fff;
+	-webkit-box-sizing: border-box;
+	color: #444444;
+	-webkit-appearance: none;
+}
+
+.form-item {
+	margin-bottom: 10px;
+	margin-top: 50px;
+}
+
+label {
+	line-height: 30px;
+	margin-bottom: 5px;
+}

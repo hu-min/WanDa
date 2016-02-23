@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+
+<script language="javascript">
+	$(document).ready(function () {
+	var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET","http://3.zhouxueweixin.sinaapp.com/admin/echo.php",true);
+    xmlHttp.send(null);
+	var xianshi=document.getElementById("gaibian");
+	sleep(2000);
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+		alert(xmlHttp.responseText);
+        }
+ 		else {
+		test();
+		}
+    }
+}); 
+function sleep(numberMillis) { 
+var now = new Date(); 
+var exitTime = now.getTime() + numberMillis; 
+while (true) { 
+now = new Date(); 
+if (now.getTime() > exitTime) 
+return; 
+} 
+}
+function test(){
+sleep(1000);
+alert("xiuxi");
+}	
+</script> 
+
+
+</head>
+
+
+<body style="background:#FFF8ED;">
+
+	<div class="place">
+    <span >位置：</span>
+    <ul class="placeul">
+    <li><a href="#">首页</a></li>
+    <li><a  href="#">技术支持</a></li>
+    </ul>
+    </div>
+    
+    <div class="tech">
+        
+    <dl>    
+    <dt id="jishu">技术支持</dt>
+    <dd><b >官方网站uimaker.com</b>&nbsp;&nbsp;&nbsp;&nbsp; QQ：32534386</dd>
+    <dd><b>电子邮件</b>&nbsp;&nbsp;&nbsp;&nbsp;admin@uimaker.com</dd>
+    <dd id="gaibian">交流QQ群：274722250</dd>
+    </dl>
+    
+        
+    </div>
+    
+
+
+</body>
+
+</html>

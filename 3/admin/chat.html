@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>无标题文档</title>
+<link rel="stylesheet" href="css/chat.css" type="text/css" />
+<script src='js/jquery.js'></script>
+<script src='http://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				var Request = new Object();
+				Request = GetRequest();
+				var id = Request['id'];
+				if (id != null) {
+					$("#nameid").val(id);
+					$("#nameid").attr('readonly', 'readonly');
+				}
+				$("#send").click(
+						function() {
+							if ($("#nameid").val() == "") {
+								alert("您好象没说发给谁呢，请填写发送对象");
+							} else {
+								if ($("#apply").val() == "") {
+									alert("提醒，您没有填写发送载体，我将默认是企业小助手发送给员工信息");
+								}
+								if ($("#upload").val() != "") {
+									var type = $("#file").val();
+									if (type == "image" || type == "voice"
+											|| type == "video"
+											|| type == "file") {
+										$("#form").submit();
+										setnull();
+										$("#frameFile").attr("height", "60px");
+										$("#frameFile").slideDown(1000);
+										setTimeout(function() {
+											$("#frameFile").slideUp(1000);
+										}, 2000);
+									} else {
+										alert("抱歉，文件类型输入错误");
+									}
+
+								} else {
+									if ($("#lname").val() != "") {
+										$("#form").submit();
+										setnull();
+										$("#frameFile").attr("height", "60px");
+										$("#frameFile").slideDown(1000);
+										setTimeout(function() {
+											$("#frameFile").slideUp(1000);
+										}, 2000);
+									} else {
+
+										alert("额，请问您想发送什么呢，告诉我吧！");
+									}
+
+								}
+							}
+
+						});
+
+				$("#video").click(function() {
+					$("#lname").slideUp(1000);
+					setTimeout(function() {
+						$("#upload").slideDown(1000);
+						$("#file").slideDown(1000);
+						$("#tip").slideDown(1000);
+						$("#video").slideUp(1000);
+						setTimeout(function() {
+							$("#msg").slideDown(1000);
+						}, 1000);
+					}, 1000);
+				});
+				$("#msg").click(function() {
+					//	var pre = $(window.frames["frameFile"].document).find("pre");
+					//	alert(pre);
+					$("#upload").slideUp(1000);
+					$("#file").slideUp(1000);
+					$("#tip").slideUp(1000);
+					setTimeout(function() {
+						$("#lname").slideDown(1000);
+						$("#msg").slideUp(1000);
+						setTimeout(function() {
+							$("#video").slideDown(1000);
+						}, 1000);
+					}, 1000);
+				});
+
+			});
+
+	function setnull() {
+		$("#upload").val("");
+		$("#lname").val("");
+		$("#file").val("");
+		$("#nameid").val("");
+		$("#apply").val("");
+	}
+
+	/**
+	 function UpdateIMG() {
+	 var xmlHttp = new XMLHttpRequest();
+	 xmlHttp
+	 .open(
+	 "GET",
+	 "http://3.zhouxueweixin.sinaapp.com/admin/echo.php?type=getToken",
+	 true);
+	 xmlHttp.send(null);
+	 xmlHttp.onreadystatechange = function() {
+	 if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+	 var token = xmlHttp.responseText;
+	 var url = "https://qyapi.weixin.qq.com/cgi-bin/material/add_material?agentid=13&type=image&access_token="
+	 + token;
+	 alert("url" + url);
+	 $("#form2").attr("action", url);
+	 $("#form2").submit();
+	 $("#frameFile2").attr("height", "500px");
+	 $("#frameFile2").slideDown(500);
+	 //var word=$("#frameFile").contents().find("pre").val();
+
+	 //var url2 = "http://3.zhouxueweixin.sinaapp.com/admin/Reply/reply_people.php?"
+	 //	+ token;
+	 //$("#form1").attr("action", url);
+
+	 }
+	 }
+	 }
+	 **/
+	function GetRequest() {
+		var url = location.search; //获取url中"?"符后的字串
+		var theRequest = new Object();
+		if (url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for (var i = 0; i < strs.length; i++) {
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+	function setStyle(x) {
+		document.getElementById(x).style.width = 600 + "px";
+		document.getElementById(x).style.height = 150 + "px";
+
+	}
+	function loseStyle(x) {
+
+		document.getElementById(x).style.width = 300 + "px";
+		document.getElementById(x).style.height = 50 + "px";
+	}
+</script>
+</head>
+<iframe id='frameFile' name="frameFile"
+	style='text-align: center; background-color: #FFF; margin: 10px auto; width: 300px; height: 50px; display: none;'>
+</iframe>
+<div style="width: 150px; height: 100px; float: left;">
+	<input type="submit" id="msg"
+		style="margin-left: 20px; margin-top: 30px; width: 100px; height: 40px; display: none; float: left;"
+		value="文字消息"> <input type="submit" id="video"
+		style="margin-left: 20px; margin-top: 30px; width: 100px; height: 40px; display: block; float: left;"
+		value="媒体消息">
+</div>
+<body>
+	<ul class="chat-thread">
+		<li>注意：不能获取历史发送的消息</li>
+		<li>消息发送成功会有异步函数提示，失败也会相应提示</li>
+		<li><a style="color: #0AD5C1"
+			href="http://3.zhouxueweixin.sinaapp.com/admin/chat.html">把我收藏以后可以直接打开发送消息</a></li>
+	</ul>
+</body>
+
+<div class="edit">
+	<form target='frameFile' id="form"
+		action="http://3.zhouxueweixin.sinaapp.com/admin/Reply/reply_people.php"
+		enctype="multipart/form-data" method="POST">
+		<input id="nameid" autocomplete="off" name="UserId" type="text"
+			style="float: left;" placeholder="输入发送对象" /> <input id="apply"
+			autocomplete="off" style="float: left; margin-left: 20px;"
+			name="agentid" type="text" placeholder="输入发送载体" /> <input
+			type="button" style="float: left; margin-left: 170px;" id="send"
+			value="Send Now">
+		<textarea type="text" id="lname" name="content"
+			onblur="loseStyle(this.id)" onfocus="setStyle(this.id)"></textarea>
+		<input id="upload" name="upload" type="file"
+			style="display: none; width: 300px; margin-top: 30px; float: left;" />
+		<input id="file" autocomplete="off" name="file" type="text"
+			style="float: left; margin: 30px 0px 0px 10px; display: none"
+			placeholder="文件类型" />
+		<p id="tip"
+			style="float: left; clear: both; color: #0EC879; font-family: Noto Sans; margin-top: 5px; font-size: 16px; display: none;">
+			此模式下发送的消息类型及其规则有：<br>
+			0、文件类型,填写规则->图片(image)语音(voice)视频(video)普通文件(file)<br>
+			1、所有文件占用大小（文件大小）必须大于5个字节(byte)<br> 2、图片最大(image):2MB,支持JPG,PNG格式<br>
+			3、语音最大(voice):2MB,播放长度不超过60s，支持AMR格式<br>
+			4、视频最大(video):10MB,支持MP4格式<br> 5、普通文件(doc\ppt等等)最大:20MB <br>
+			Tip:以上提示只会显示一次，请知悉<br>
+		</p>
+	</form>
+</div>
+<div class="credits">
+	<li style="list-style-type: none;">万达设备有限公司</li>WanDa Equipment Limited
+	Company
+</div>
+
+</html>
